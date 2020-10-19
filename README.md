@@ -1,6 +1,12 @@
-## Get started
-
+# Interactive Scatterplot matrix
 *Zesty zatter zots*
+
+## Hosted example
+
+https://interactive-scatterplot.vercel.app
+
+
+## Run Locally
 
 Dev server
 
@@ -8,8 +14,7 @@ Dev server
 npm run dev
 ```
 
-prod mode
-
+Prod build
 
 ```bash
 npm run build

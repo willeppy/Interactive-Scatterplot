@@ -36,7 +36,8 @@
 
 <main>
 	<h1>Interactive Scatterplot Matrix</h1>
-	<p>Hover over a scatterplot to bring that variable into focus.</p>
+	<p>Hover over a scatterplot to bring that variable into focus. 
+		<a href="https://github.com/willeppy/Interactive-Scatterplot"> See the code.</a></p>
 
 	{#each col_keys as static_col, i}
 		<Chart on:mouseenter={() => handleHover(i)} id={i} c_data={data_json} {static_col} {var_col}/>
