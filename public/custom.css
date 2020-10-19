@@ -1,13 +1,14 @@
 main {
+    /* text-align: center; */
     padding: 1em;
     max-width: 240px;
     margin: 0 auto;
 }
 
 h1 {
-    color: orange;
+    color: #4C78A8;
     text-transform: uppercase;
-    font-size: 4em;
+    font-size: 3em;
     font-weight: 100;
 }
 
