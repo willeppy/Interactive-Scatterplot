@@ -5,6 +5,7 @@
 	// imports
 	import Chart from "./Chart.svelte";
 	import Chart2 from "./Chart2.svelte";
+	import Chart3 from "./Chart3.svelte";
 	import * as data_json from "./data_dir/data.json";
 
 	let col_keys = Object.keys(data_json["values"][0]); 
@@ -42,7 +43,8 @@
 
 	<!-- <Chart2 id={1} count={b_1_c}/> -->
 	<!-- <Chart2 id={2} count={b_2_c}/> -->
-	<Chart2/>
+	<!-- <Chart2/> -->
+	<Chart3/>
 
 
 </main>
