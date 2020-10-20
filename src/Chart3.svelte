@@ -34,18 +34,19 @@
         },
     });
 
+    // STUFF THAT CHANGES
+
     var old_c = sSpec;
     var new_c = eSpec;
+    export let c_id;
 
-    vegaEmbed("#view", sSpec, { renderer: "svg" });
-    vegaEmbed("#view2", sSpec, { renderer: "svg" });
+    vegaEmbed("#view"+c_id, sSpec, { renderer: "svg" });
 
     let i = 0;
 
     function handleClick() {
         i++;
-        play("#view");
-        play("#view2");
+        play("#view"+c_id);
         
         let temp = old_c;
         old_c = new_c;
@@ -67,5 +68,4 @@
     <button on:click={handleClick} id="btn">click me</button>
 </div>
 
-<div id="view" />
-<div id="view2" />
+<div id={"view"+c_id} />

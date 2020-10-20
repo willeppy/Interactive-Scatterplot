@@ -1,5 +1,5 @@
 <script>
-    import "../public/gemini.web.js";
+    // import "../public/gemini.web.js";
 
     // CONST SPECS
     const gemSpec = {
@@ -51,7 +51,11 @@
     function handleClick() {
         count++;
 
-        runGem(old_c, new_c, gemSpec, id, count);
+        play(old_c, new_c, gemSpec, id, count);
+
+        let temp = old_c;
+        old_c = new_c;
+        new_c = temp;
         
     }
 
@@ -61,7 +65,7 @@
 
 
     // this gets re-run
-    function runGem(o, n, g, idd, ccnt) {
+    // function runGem(o, n, g, idd, ccnt) {
 
         async function play(o, n, g, idd, ccnt) {
             console.log("running play, id="+idd+" count="+ccnt);
@@ -71,21 +75,21 @@
             return ccnt;
         }
 
-        play(o, n, g, idd, ccnt)
-            .then(value => {
-                console.log(value)
+    //     play(o, n, g, idd, ccnt)
+    //         .then(value => {
+    //             console.log(value)
 
-                // switch
-                let temp = old_c;
-                old_c = new_c;
-                new_c = temp;
+    //             // switch
+    //             let temp = old_c;
+    //             old_c = new_c;
+    //             new_c = temp;
 
-            });
+    //         });
     
-        // play(old_c, new_c, gemSpec, id, count);
+    //     // play(old_c, new_c, gemSpec, id, count);
 
-        // play(c);
-    }
+    //     // play(c);
+    // }
 
 
     
