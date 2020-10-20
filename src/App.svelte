@@ -8,12 +8,13 @@
 
 	import * as data_json from "./data_dir/data.json";
 
-	let col_keys = Object.keys(data_json["values"][0]); 
+	// let col_keys = Object.keys(data_json["values"][0]); 
+	let col_keys = ["A", "B"];
+
 	let var_col = col_keys[0];
 
 	function handleHover(i){
 		var_col=col_keys[i];
-		console.log("VAR COL IS NOW: ", var_col)
 	}
 
 	// let i = 0;
@@ -28,8 +29,9 @@
 	<p>Hover over a scatterplot to bring that variable into focus. 
 		<a href="https://github.com/willeppy/Interactive-Scatterplot"> See the code.</a></p>
 
+	<p>{"Last hovered on: " + var_col}</p>
 	{#each col_keys as static_col, i}
-		<Chart on:mouseenter={() => handleHover(i)} id={i} c_data={data_json} {static_col} {var_col}/>
+		<Chart on:mouseenter={() => handleHover(i)} c_id={i} c_data={data_json} {static_col} {var_col}/>
 	{/each}
 	
 	<!-- <button on:click={handleClick}> Click me to change both </button>

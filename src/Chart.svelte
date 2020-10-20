@@ -4,7 +4,9 @@
     export let c_data;
     export let static_col;
     export let var_col;
-    export let id;
+    export let c_id;
+
+    // let id_tag = ""
 
     // const
     const gs = {
@@ -52,18 +54,10 @@
         },
     });
 
+    var s_new_vega = s_old_vega;
 
-    // func
-    async function play(ov, nv) {
-        console.log("In play function for for Chart #vis_" + id);
-        console.log("OV:", ov);
-        console.log("NV:", nv);
-        let anim = await gemini.animate(ov, nv, gs);
-        await anim.play("#vis_" + id);
-        
-        //return "done.";
-    }
-    
+    vegaEmbed("#vis_" + c_id, s_old_vega);
+
     function updateChart(sc, vc) {
         let s_new;
 
@@ -89,20 +83,28 @@
             };
         }
 
-        let s_new_vega = gemini.vl2vg4gemini(s_new);
+        s_new_vega = gemini.vl2vg4gemini(s_new);
 
-        play(s_old_vega, s_new_vega);
+        play("#vis_"+c_id);
         
         // update
         s_old_vega = s_new_vega;
     }
 
-    // console.log("Vega embed being run in " + id + " with... ");
-    // console.log(s_old_vega);
-    vegaEmbed("#vis_" + id, s_old_vega);
+    // func
+    async function play(chartTag) {
+        console.log("In play function for for Chart "+ chartTag);
+        console.log("OV:", s_old_vega);
+        console.log("NV:", s_new_vega);
+        let anim = await gemini.animate(s_old_vega, s_new_vega, gs);
+        await anim.play(chartTag);
+        
+        //return "done.";
+    }
+
 
     $: updateChart(static_col, var_col);
 </script>
 
 <!-- The mouse enter with no functon forwards this event to app I think -->
-<div on:mouseenter id="vis_{id}" />
+<div on:mouseenter id="vis_{c_id}" />
