@@ -43,8 +43,8 @@
 
     vegaEmbed("#view"+c_id, sSpec, { renderer: "svg" });
 
-    function handleChange(index) {
-        console.log("Index in "+c_id+" is "+index)
+    function handleChange(c) {
+        console.log("count in "+c_id+" is "+c)
         play("#view"+c_id);
         
         let temp = old_c;

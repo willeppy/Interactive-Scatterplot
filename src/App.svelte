@@ -4,7 +4,6 @@
 <script>
 	// imports
 	// import Chart from "./Chart.svelte";
-	import Chart3 from "./Chart3.svelte";
 	import Chart4 from "./Chart4.svelte";
 
 	import * as data_json from "./data_dir/data.json";
@@ -14,19 +13,6 @@
 
 	// function handleHover(i){
 	// 	var_col=col_keys[i];
-	// }
-
-	// var b_1_c = 0;
-	// var b_2_c = 0;
-
-	// function handleClick(b_i) {
-	// 	if(b_i == 1) {
-	// 		b_1_c += 1;
-	// 	}
-
-	// 	if(b_i == 2) {
-	// 		b_2_c += 1;
-	// 	}
 	// }
 
 	let i = 0;
@@ -44,11 +30,6 @@
 	<!-- {#each col_keys as static_col, i}
 		<Chart on:mouseenter={() => handleHover(i)} id={i} c_data={data_json} {static_col} {var_col}/>
 	{/each} -->
-
-	<!-- <button on:click={() => handleClick(1)}> Click me 1 </button> -->
-	<!-- <button on:click={() => handleClick(2)}> Click me 2 </button> -->
-
-	<!-- <Chart3 c_id={1}/> -->
 	
 	<button on:click={handleClick}> Click me to change both </button>
 
