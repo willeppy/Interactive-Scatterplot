@@ -40,6 +40,8 @@
     var new_c = eSpec;
 
     vegaEmbed("#view", sSpec, { renderer: "svg" });
+    vegaEmbed("#view2", sSpec, { renderer: "svg" });
+
 
     let i = 0;
 
@@ -53,6 +55,8 @@
             console.log("running play");
             let anim = await gemini.animate(old_c, new_c, gemSpec);
             await anim.play("#view");
+            await anim.play("#view2");
+
 
             // switch
             let temp = old_c;
@@ -72,3 +76,5 @@
 </div>
 
 <div id="view" />
+<div id="view2" />
+
