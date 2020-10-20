@@ -4,8 +4,9 @@
 <script>
 	// imports
 	// import Chart from "./Chart.svelte";
-	// import Chart2 from "./Chart2.svelte";
 	import Chart3 from "./Chart3.svelte";
+	import Chart4 from "./Chart4.svelte";
+
 	import * as data_json from "./data_dir/data.json";
 
 	let col_keys = Object.keys(data_json["values"][0]); 
@@ -27,6 +28,12 @@
 	// 		b_2_c += 1;
 	// 	}
 	// }
+
+	let i = 0;
+
+	function handleClick() {
+		i++;
+	}
 </script>
 
 <main>
@@ -41,12 +48,12 @@
 	<!-- <button on:click={() => handleClick(1)}> Click me 1 </button> -->
 	<!-- <button on:click={() => handleClick(2)}> Click me 2 </button> -->
 
-	<!-- <Chart2 id={1} count={b_1_c}/> -->
-	<!-- <Chart2 id={2} count={b_2_c}/> -->
-	<!-- <Chart2/> -->
-	<Chart3 c_id={1}/>
-	<Chart3 c_id={2}/>
+	<!-- <Chart3 c_id={1}/> -->
+	
+	<button on:click={handleClick}> Click me to change both </button>
 
+	<Chart4 c_id={1} {i}/>
+	<Chart4 c_id={2} {i}/>
 
 
 </main>
