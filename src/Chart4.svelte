@@ -1,71 +1,117 @@
 <script>
+    export let c_id;
+    export let c_data;
+    export let static_col;
+    export let var_col;
+
     const gemSpec = {
         timeline: {
-            sync: [
-                { component: { axis: "x" }, timing: { duration: 1000 } },
-                { component: { mark: "marks" }, timing: { duration: 1000 } },
+            concat: [
+                {
+                    sync: [
+                        {
+                            component: { mark: "marks" },
+                            change: {
+                                scale: ["x", "y"],
+                                data: true,
+                                encode: {
+                                    update: true,
+                                    enter: true,
+                                    exit: true,
+                                },
+                                marktype: true,
+                            },
+                            timing: { duration: { ratio: 1 } },
+                        },
+                        {
+                            component: { axis: "x" },
+                            timing: { duration: { ratio: 1 } },
+                        },
+                        {
+                            component: { axis: "y" },
+                            timing: { duration: { ratio: 1 } },
+                        },
+                    ],
+                },
             ],
         },
+        totalDuration: 2000,
     };
-    const sSpec = gemini.vl2vg4gemini({
-        data: {
-            values: [
-                { Hungry: 50, Name: "Gemini" },
-                { Hungry: 100, Name: "Cordelia" },
-            ],
-        },
-        mark: "bar",
-        encoding: {
-            x: { field: "Hungry", type: "quantitative" },
-            y: { field: "Name", type: "nominal" },
-        },
-    });
-    const eSpec = gemini.vl2vg4gemini({
-        data: {
-            values: [
-                { Hungry: 100, Name: "Gemini" },
-                { Hungry: 80, Name: "Cordelia" },
-            ],
-        },
-        mark: "bar",
-        encoding: {
-            x: { field: "Hungry", type: "quantitative" },
-            y: { field: "Name", type: "nominal" },
-        },
-    });
 
-    // STUFF THAT CHANGES
+    var old_c = gemini.vl2vg4gemini({
+                $schema: "https://vega.github.io/schema/vega-lite/v4.json",
+                data: c_data,
+                mark: "bar",
+                encoding: {
+                    x: { bin: true, field: static_col },
+                    y: { aggregate: "count" },
+                },
+            });
 
-    var old_c = sSpec;
-    var new_c = eSpec;
-    export let c_id;
-    export let i;
+    var new_c = old_c;
+    let viewtag = "#view_"+c_id;
 
-    vegaEmbed("#view"+c_id, sSpec, { renderer: "svg" });
+    vegaEmbed(viewtag, old_c, { renderer: "svg" });
 
-    function handleChange(c) {
-        console.log("count in "+c_id+" is "+c)
-        play("#view"+c_id);
+    function handleChange(sc, vc) {
         
-        let temp = old_c;
+        let s_new;
+
+        if (sc == vc) {
+            s_new = {
+                $schema: "https://vega.github.io/schema/vega-lite/v4.json",
+                data: c_data,
+                mark: "bar",
+                encoding: {
+                    x: { bin: true, field: sc },
+                    y: { aggregate: "count" },
+                },
+            };
+        } else {
+            s_new = {
+                $schema: "https://vega.github.io/schema/vega-lite/v4.json",
+                data: c_data,
+                mark: { type: "point", filled: true },
+                encoding: {
+                    x: { field: sc, type: "quantitative" },
+                    y: { field: vc, type: "quantitative" },
+                },
+            };
+        }
+
+        new_c = gemini.vl2vg4gemini(s_new);
+        
+        
+        // play("#view"+c_id);
+        play();
+        
+        // let temp = old_c;
         old_c = new_c;
-        new_c = temp;
+        // new_c = temp;
+
+
         
     }
 
-    async function play(viewtag) {
-        console.log("running play");
+    async function play() {
+        console.log("running play on "+viewtag);
         let anim = await gemini.animate(old_c, new_c, gemSpec);
         await anim.play(viewtag);
 
-        return viewtag;
+        // return viewtag;
     }
 
-    $: handleChange(i)
+    $: handleChange(static_col, var_col)
 </script>
 
-<div>
-    <p id="texttag">{'clicked ' + i}</p>
+<div class="chart_wrapper">
+    <p>{'static: ' + static_col+", var: "+ var_col}</p>
+    <div id={"view_"+c_id} />
 </div>
 
-<div id={"view"+c_id} />
+<style>
+    .chart_wrapper{
+        display: inline-block;
+    }
+</style>
+
