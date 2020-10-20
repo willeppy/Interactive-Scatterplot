@@ -1,6 +1,4 @@
 <script>
-    
-
     const gemSpec = {
         timeline: {
             sync: [
@@ -42,39 +40,32 @@
     vegaEmbed("#view", sSpec, { renderer: "svg" });
     vegaEmbed("#view2", sSpec, { renderer: "svg" });
 
-
     let i = 0;
 
     function handleClick() {
         i++;
-        runGem();
+        play("#view");
+        play("#view2");
+        
+        let temp = old_c;
+        old_c = new_c;
+        new_c = temp;
+        
     }
 
-    function runGem() {
-        async function play() {
-            console.log("running play");
-            let anim = await gemini.animate(old_c, new_c, gemSpec);
-            await anim.play("#view");
-            await anim.play("#view2");
+    async function play(viewtag) {
+        console.log("running play");
+        let anim = await gemini.animate(old_c, new_c, gemSpec);
+        await anim.play(viewtag);
 
-
-            // switch
-            let temp = old_c;
-            old_c = new_c;
-            new_c = temp;
-        }
-
-        // setInterval(play, 3000)
-
-        play();
+        return viewtag;
     }
 </script>
 
 <div>
-    <p id="texttag">{"clicked "+i}</p>
+    <p id="texttag">{'clicked ' + i}</p>
     <button on:click={handleClick} id="btn">click me</button>
 </div>
 
 <div id="view" />
 <div id="view2" />
-

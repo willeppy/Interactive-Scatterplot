@@ -55,7 +55,7 @@
         
     }
 
-    vegaEmbed("#view_"+id, gemSpec, { renderer: "svg" });
+    vegaEmbed("#view_"+id, sSpec, { renderer: "svg" });
 
     // vegaEmbed("#view2", sSpec, { renderer: "svg" });
 
