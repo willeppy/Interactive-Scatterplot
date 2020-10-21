@@ -1,10 +1,10 @@
 <script>
-    export let c_id;
     export let c_data;
     export let static_col;
     export let var_col;
+    export let c_id;
 
-    const gemSpec = {
+    const gs = {
         timeline: {
             concat: [
                 {
@@ -39,22 +39,21 @@
     };
 
     var old_c = gemini.vl2vg4gemini({
-                $schema: "https://vega.github.io/schema/vega-lite/v4.json",
-                data: c_data,
-                mark: "bar",
-                encoding: {
-                    x: { bin: true, field: static_col },
-                    y: { aggregate: "count" },
-                },
-            });
+        $schema: "https://vega.github.io/schema/vega-lite/v4.json",
+        data: c_data,
+        mark: "bar",
+        encoding: {
+            x: { bin: true, field: static_col },
+            y: { aggregate: "count" },
+        },
+    });
 
     var new_c = old_c;
-    let viewtag = "#view_"+c_id;
+    let viewtag = "#view_" + c_id;
 
     vegaEmbed(viewtag, old_c, { renderer: "svg" });
 
     function handleChange(sc, vc) {
-        
         let s_new;
 
         if (sc == vc) {
@@ -80,38 +79,33 @@
         }
 
         new_c = gemini.vl2vg4gemini(s_new);
-        
-        
+
         // play("#view"+c_id);
         play();
-        
+
         // let temp = old_c;
         old_c = new_c;
         // new_c = temp;
-
-
-        
     }
 
     async function play() {
-        console.log("running play on "+viewtag);
-        let anim = await gemini.animate(old_c, new_c, gemSpec);
+        // console.log("running play on " + viewtag);
+        let anim = await gemini.animate(old_c, new_c, gs);
         await anim.play(viewtag);
 
         // return viewtag;
     }
 
-    $: handleChange(static_col, var_col)
+    $: handleChange(static_col, var_col);
 </script>
 
-<div class="chart_wrapper">
-    <p>{'static: ' + static_col+", var: "+ var_col}</p>
-    <div id={"view_"+c_id} />
-</div>
-
 <style>
-    .chart_wrapper{
+    .chart_wrapper {
         display: inline-block;
     }
 </style>
 
+<div class="chart_wrapper">
+    <p>{'static: ' + static_col + ', var: ' + var_col}</p>
+    <div on:mouseenter id={'view_' + c_id} />
+</div>

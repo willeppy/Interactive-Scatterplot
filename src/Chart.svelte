@@ -1,14 +1,9 @@
 <script>
-    // import "../public/gemini.web.js";
-
     export let c_data;
     export let static_col;
     export let var_col;
     export let c_id;
 
-    // let id_tag = ""
-
-    // const
     const gs = {
         timeline: {
             concat: [
@@ -44,7 +39,7 @@
     };
 
     // init
-    var s_old_vega = gemini.vl2vg4gemini({
+    var old_c = gemini.vl2vg4gemini({
         $schema: "https://vega.github.io/schema/vega-lite/v4.json",
         data: c_data,
         mark: "bar",
@@ -54,9 +49,10 @@
         },
     });
 
-    var s_new_vega = s_old_vega;
+    var new_c = old_c;
+    let viewtag = "#view_" + c_id;
 
-    vegaEmbed("#vis_" + c_id, s_old_vega);
+    vegaEmbed(viewtag, old_c, { renderer: "svg" });
 
     function updateChart(sc, vc) {
         let s_new;
@@ -83,28 +79,31 @@
             };
         }
 
-        s_new_vega = gemini.vl2vg4gemini(s_new);
+        new_c = gemini.vl2vg4gemini(s_new);
 
-        play("#vis_"+c_id);
-        
+        play().then((res) => {
+            console.log("res: ", res)
+        });
+
         // update
-        s_old_vega = s_new_vega;
+        old_c = new_c;
     }
 
-    // func
-    async function play(chartTag) {
-        console.log("In play function for for Chart "+ chartTag);
-        console.log("OV:", s_old_vega);
-        console.log("NV:", s_new_vega);
-        let anim = await gemini.animate(s_old_vega, s_new_vega, gs);
-        await anim.play(chartTag);
-        
-        //return "done.";
+    async function play() {
+        let anim = await gemini.animate(old_c, new_c, gs);
+        await anim.play(viewtag);
     }
-
 
     $: updateChart(static_col, var_col);
 </script>
 
-<!-- The mouse enter with no functon forwards this event to app I think -->
-<div on:mouseenter id="vis_{c_id}" />
+<style>
+    .chart_wrapper {
+        display: inline-block;
+    }
+</style>
+
+<div class="chart_wrapper">
+    <p>{'static: ' + static_col + ', var: ' + var_col}</p>
+    <div on:mouseenter id={'view_' + c_id} />
+</div>
