@@ -81,16 +81,18 @@
 
         new_c = gemini.vl2vg4gemini(s_new);
 
-        play().then((res) => {
-            console.log("res: ", res)
-        });
+        play(old_c, new_c);
 
         // update
         old_c = new_c;
     }
 
-    async function play() {
-        let anim = await gemini.animate(old_c, new_c, gs);
+    async function play(oc, nc) {
+        console.log("In play for "+viewtag);
+        console.log("OLD_C ", oc);
+        console.log("NEW_C ", nc);
+
+        let anim = await gemini.animate(oc, nc, gs);
         await anim.play(viewtag);
     }
 
@@ -105,5 +107,6 @@
 
 <div class="chart_wrapper">
     <p>{'static: ' + static_col + ', var: ' + var_col}</p>
-    <div on:mouseenter id={'view_' + c_id} />
+    <!-- <div on:mouseenter id={'view_' + c_id} /> -->
+    <div id={'view_' + c_id} />
 </div>
